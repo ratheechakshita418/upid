@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:latest
+    container_name: ecommerce_mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: ecommerce
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - ecommerce_network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Express Backend
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: ecommerce_backend
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      MONGODB_URI: mongodb://admin:password123@mongodb:27017/ecommerce
+      JWT_SECRET: your_super_secret_jwt_key_12345
+      NODE_ENV: development
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - ecommerce_network
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    command: npm run dev
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: ecommerce_frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:5000/api
+    depends_on:
+      - backend
+    networks:
+      - ecommerce_network
+    volumes:
+      - ./client/src:/app/src
+    command: npm run dev
+
+volumes:
+  mongodb_data:
+
+networks:
+  ecommerce_network:
+    driver: bridge
