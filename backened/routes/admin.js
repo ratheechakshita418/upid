@@ -1,10 +1,10 @@
 const express = require('express');
-const Product = require('../models/Product');
-const Order = require('../models/Order');
-const User = require('../models/User');
+const Product = require('../models/product');
+const Order = require('../models/Order');   // keep this, file is Order.js
+const User = require('../models/user');
 const { adminMiddleware } = require('../middleware/auth');
-
 const router = express.Router();
+
 
 // Create product
 router.post('/products', adminMiddleware, async (req, res) => {
