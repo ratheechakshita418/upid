@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/signup';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
-import Orders from './pages/Orders.jsx';
+import Orders from './pages/Order';
 import Admin from './pages/Admin';
 import './App.css';
 
