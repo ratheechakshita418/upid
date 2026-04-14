@@ -1,11 +1,19 @@
 FROM node:18-alpine
 
+# Set workdir to backend folder
 WORKDIR /app
 
-COPY package*.json ./
+# Copy backend package files
+COPY backened/package*.json ./
+
 RUN npm install
 
-COPY . .
+# Copy backend source code
+COPY backened/. .
 
-EXPOSE 10000
-CMD ["npm", "start"]
+# Expose backend port (change if your server uses something else)
+EXPOSE 5000
+
+# Start command (adjust if your main file is different)
+CMD ["node", "server.js"]
+
