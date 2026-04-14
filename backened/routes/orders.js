@@ -1,8 +1,9 @@
 const express = require('express');
-const Order = require('../models/Order');
-const Cart = require('../models/Cart');
-const Product = require('../models/Product');
+const Order = require('../models/Order');   // keep as is (Order.js)
+const Cart = require('../models/cart');     // lowercase
+const Product = require('../models/product'); // lowercase
 const { authMiddleware } = require('../middleware/auth');
+
 
 const router = express.Router();
 
