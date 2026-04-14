@@ -1,3 +1,4 @@
+# Build stage
 FROM node:18-alpine AS builder
 
 WORKDIR /app
@@ -11,7 +12,7 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build the application
+# Build the application (Vite)
 RUN npm run build
 
 # Production stage
@@ -19,7 +20,7 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Install serve to run the application
+# Install serve to run the built app
 RUN npm install -g serve
 
 # Copy built files from builder
@@ -30,3 +31,4 @@ EXPOSE 5173
 
 # Start application
 CMD ["serve", "-s", "dist", "-l", "5173"]
+
