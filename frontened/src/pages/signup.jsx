@@ -40,7 +40,7 @@ export default function Signup() {
         username,
         email,
         password,
-        confirmPassword
+        confirmPassword,
       });
 
       localStorage.setItem('token', response.data.token);
@@ -71,20 +71,18 @@ export default function Signup() {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="john_doe"
-              required
+              placeholder="Enter your username"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
+              placeholder="Enter your email"
             />
           </div>
 
@@ -95,8 +93,7 @@ export default function Signup() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
+              placeholder="Enter your password"
             />
           </div>
 
@@ -107,20 +104,20 @@ export default function Signup() {
               id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="••••••••"
-              required
+              placeholder="Confirm your password"
             />
           </div>
 
-          <button type="submit" disabled={loading} className="submit-btn">
-            {loading ? 'Creating Account...' : 'Sign Up'}
+          <button type="submit" className="auth-button" disabled={loading}>
+            {loading ? 'Creating account...' : 'Sign Up'}
           </button>
         </form>
 
-        <div className="auth-footer">
-          <p>Already have an account? <Link to="/login">Login here</Link></p>
-        </div>
+        <p className="auth-footer">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
       </div>
     </div>
   );
 }
+
